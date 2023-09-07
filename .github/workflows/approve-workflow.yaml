@@ -14,14 +14,14 @@ on:
 jobs:
   approve:
     runs-on: ${{ inputs.runs-on }}
-    # if: ${{ github.event.pull_request.author == inputs.author }}
+    # if: ${{ github.event.pull_request.user.login == inputs.author }}
     # env:
     #   PR_URL: ${{github.event.pull_request.html_url}}
     #   GITHUB_TOKEN: ${{secrets.DEPENDABOT_AUTOMERGE_TOKEN}}
     steps:
     - name: Debug
       run: |
-        echo "pull_request=${{ github.event.pull_request}}"
+        echo "pull_request=${{ github.event.pull_request.user.login}}"
     - name: Dependabot metadata
       id: metadata
       uses: dependabot/fetch-metadata@v1
