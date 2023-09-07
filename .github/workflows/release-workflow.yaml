@@ -14,13 +14,19 @@ on:
     secrets:
       token:
         required: false
-
+    outputs:
+      tag:
+        description: "The released tag"
+        value: ${{ jobs.release.outputs.tag }}
+  
 jobs:
   release:
     runs-on: ${{ inputs.runs-on }}
     if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     permissions:
       contents: write
+    outputs:
+      tag: ${{ steps.release.outputs.tag }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -51,10 +57,11 @@ jobs:
           echo "next=$NEXT"
         } >> "$GITHUB_OUTPUT"
     - name: Create tag and release
+      id: release
       if: ${{steps.history.outputs.authors==inputs.author && steps.history.outputs.next!=''}}
       env:
         GH_TOKEN: ${{ github.token }}
       shell: bash
       run: |
         gh release create "${{steps.history.outputs.next}}" --generate-notes
-        echo "release=${{steps.history.outputs.next}}" >> "$GITHUB_OUTPUT"
+        echo "tag=${{steps.history.outputs.next}}" >> "$GITHUB_OUTPUT"
