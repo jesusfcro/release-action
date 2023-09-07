@@ -14,10 +14,10 @@ on:
 jobs:
   approve:
     runs-on: ${{ inputs.runs-on }}
-    if: ${{ github.event.pull_request.author == inputs.author }}
-    env:
-      PR_URL: ${{github.event.pull_request.html_url}}
-      GITHUB_TOKEN: ${{secrets.DEPENDABOT_AUTOMERGE_TOKEN}}
+    # if: ${{ github.event.pull_request.author == inputs.author }}
+    # env:
+    #   PR_URL: ${{github.event.pull_request.html_url}}
+    #   GITHUB_TOKEN: ${{secrets.DEPENDABOT_AUTOMERGE_TOKEN}}
     steps:
     - name: Dependabot metadata
       id: metadata
