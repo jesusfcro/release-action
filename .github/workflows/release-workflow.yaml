@@ -11,9 +11,6 @@ on:
         required: false
         type: string
         default: ubuntu-latest
-    secrets:
-      token:
-        required: false
     outputs:
       tag:
         description: "The released tag"
